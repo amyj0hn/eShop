@@ -1,4 +1,4 @@
-function errorHandling(err, req, res, next) {
+function errorHandling(err, res, next) {
     if (err || res.statusCode >= 400) {
         res.json(
             {
