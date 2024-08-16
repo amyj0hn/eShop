@@ -5,25 +5,25 @@ import { compare, hash } from "bcrypt";
 class Users{
     fetchUsers(req,res){
         try {
-            const strQry = `
-                SELECT userID, firstName, lastName, age, emailAdd, userRole, profileURL
-                FROM Users
-                WHERE userID = '${req.params.id}';
-                `;
-            db.query(strQry, (err, result) => {
-              if (err) throw new Error("Issue when retrieving a user.");
-              res.json({
-                status: res.statusCode,
-                result: result[0],
-              });
-            });
-          } catch (e) {
+          const strQry = `
+              SELECT firstName, lastName, age, emailAdd, userRole, profileURL
+              FROM Users;
+              `
+          db.query(strQry, (err, results) => {
+            if (err) throw new Error("Issue when retrieving all users.");
             res.json({
-              status: 404,
-              msg: e.message,
+              status: res.statusCode,
+              results,
             });
-          }
-    }
+          });
+        } catch (e) {
+          res.json({
+            status: 404,
+            msg: e.message,
+          });
+        }
+      };
+    
     fetchUser(req,res){
         try {
             const strQry = `
